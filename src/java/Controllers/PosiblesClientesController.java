@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,42 +35,80 @@ public class PosiblesClientesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
 // validar boton guardar
         if (request.getParameter("btnGuardar") != null) {
             btnGuardar(request, response);
-        } 
-// validar boton Modificar
+        } // validar boton Modificar
         else if (request.getParameter("btnModificar") != null) {
-            
-        } 
-// validar boton Canceclar
+
+        } // validar boton Canceclar
         else if (request.getParameter("btnCancelar") != null) {
 
+        }else if (request.getParameter("codigoSeleccionado") != null) {
+            if (request.getParameter("stOpcion").equals("M")) {
+                cargarModificar(request, response);
+            } else if (request.getParameter("stOpcion").equals("E")) {
+                
+            }
         }
-
+        
     }
+    
+    public void cargarModificar (HttpServletRequest request,
+            HttpServletResponse  response) throws IOException, ServletException{
+        try {
+            List<Models.clsPosiblesClientes> lstclsPosiblesClientes = new ArrayList<Models.clsPosiblesClientes>();
+            Models.clsPosiblesClientes obclsPosiblesClientes = new Models.clsPosiblesClientes();
+            
+            HttpSession session = request.getSession(true);
+            
+            if (session.getAttribute("lstPosiblesClientes")!= null) {
+                lstclsPosiblesClientes =  (List<Models.clsPosiblesClientes>)  session.getAttribute("lstclsPosiblesClientes");
+            }
+            
+            for (Models.clsPosiblesClientes item : lstclsPosiblesClientes) {
+                if (item.getInCodigo() == Integer.parseInt(request.getParameter("codigoSeleccionado"))) {
+                    obclsPosiblesClientes = item;
+                }
+            }
+            
+            request.setAttribute("obclsPosiblesClientes", obclsPosiblesClientes);
+            request.setAttribute("lstclsPosiblesClientes", lstclsPosiblesClientes);
+            request.getRequestDispatcher("PosiblesClientes.jsp").forward(request, response);
+            
+        } catch (Exception ex) {
+            request.setAttribute("stTipo", "error");
+            request.setAttribute("stMensaje", ex.getMessage());
+            request.getRequestDispatcher("PosiblesClientes.jsp").forward(request, response);
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
 
     public void btnGuardar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         try {
-            
+
             //Definicion de modelos
             Models.clsPosiblesClientes obclsPosiblesClientes = new Models.clsPosiblesClientes();// principal
-            
+
             Models.clsFuentePosibleCliente obclsFuentePosibleCliente = new Models.clsFuentePosibleCliente();
             Models.clsEstadoPosibleCliente obclsEstadoPosibleCliente = new Models.clsEstadoPosibleCliente();
             Models.clsSector obclsSector = new Models.clsSector();
             Models.clsCalificacion obclsCalificacion = new Models.clsCalificacion();
-            
-            
+
             //Asignacion de atributos o porpiedades
             if (request.getParameter("txtEmpresa") != null) {
                 obclsPosiblesClientes.setStEmpresa(request.getParameter("txtEmpresa"));
             }
             if (request.getParameter("txtNombre") != null) {
-                obclsPosiblesClientes.setStNombres(request.getParameter("txtNombre"));
+                obclsPosiblesClientes.setStNombre(request.getParameter("txtNombre"));
             }
             if (request.getParameter("txtApellidos") != null) {
                 obclsPosiblesClientes.setStApellidos(request.getParameter("txtApellidos"));
@@ -92,100 +131,85 @@ public class PosiblesClientesController extends HttpServlet {
             if (request.getParameter("txtSitioWeb") != null) {
                 obclsPosiblesClientes.setStSitioWeb(request.getParameter("txtSitioWeb"));
             }
-            
-             
-
 
 //lista desplegable FUENTE POSIBLE CLIENTE
-             
             if (request.getParameter("ddlFuentePosibleCliente") != null) {
-                
+
                 //Modelo Externo 
                 obclsFuentePosibleCliente.setInCodigo(Integer.parseInt(request.getParameter("ddlFuentePosibleCliente")));
-                 
+
                 String stDescripcion = "";
-                
+
                 if (request.getParameter("ddlFuentePosibleCliente").equals("1")) {
-                     stDescripcion = "Ninguno";     
-                }else if (request.getParameter("ddlFuentePosibleCliente").equals("2")) {
-                     stDescripcion = "Aviso";
-                }else if (request.getParameter("ddlFuentePosibleCliente").equals("3")) {
-                     stDescripcion = "Llamada no solicitada";
-                }else if (request.getParameter("ddlFuentePosibleCliente").equals("4")) {
-                     stDescripcion = "Recomendacion de empleado";    
-                }else if (request.getParameter("ddlFuentePosibleCliente").equals("5")) {
-                     stDescripcion = "Recomendacion externa";     
-                }else if (request.getParameter("ddlFuentePosibleCliente").equals("6")) {
-                     stDescripcion = "Tienda en linea";    
+                    stDescripcion = "Ninguno";
+                } else if (request.getParameter("ddlFuentePosibleCliente").equals("2")) {
+                    stDescripcion = "Aviso";
+                } else if (request.getParameter("ddlFuentePosibleCliente").equals("3")) {
+                    stDescripcion = "Llamada no solicitada";
+                } else if (request.getParameter("ddlFuentePosibleCliente").equals("4")) {
+                    stDescripcion = "Recomendacion de empleado";
+                } else if (request.getParameter("ddlFuentePosibleCliente").equals("5")) {
+                    stDescripcion = "Recomendacion externa";
+                } else if (request.getParameter("ddlFuentePosibleCliente").equals("6")) {
+                    stDescripcion = "Tienda en linea";
                 }
                 obclsFuentePosibleCliente.setStDescripcion(stDescripcion);
                 //asignacion al  padre
                 obclsPosiblesClientes.setObclsFuentePosibleCliente(obclsFuentePosibleCliente);
             }
-            
-            
-            
-            
- //lista desplegable ESTADO POSIBLE CLIENTE
-           
+
+            //lista desplegable ESTADO POSIBLE CLIENTE
             if (request.getParameter("ddlEstadoPosibleCliente") != null) {
-                
+
                 //Modelo Externo 
                 obclsSector.setInCodigo(Integer.parseInt(request.getParameter("ddlEstadoPosibleCliente")));
-                 
+
                 String stDescripcion = "";
-                
+
                 if (request.getParameter("ddlEstadoPosibleCliente").equals("1")) {
-                     stDescripcion = "Ninguno";
-                }else if (request.getParameter("ddlEstadoPosibleCliente").equals("2")) {
-                     stDescripcion = "APS(Proveedor de servicios de aplicaciones";     
-                }else if (request.getParameter("ddlEstadoPosibleCliente").equals("3")) {
-                     stDescripcion = "OEM de datos";     
-                }else if (request.getParameter("ddlEstadoPosibleCliente").equals("4")) {
-                     stDescripcion = "ERP(Planificaicon de recursos de empresa)";     
-                }else if (request.getParameter("ddlEstadoPosibleCliente").equals("5")) {
-                     stDescripcion = "Gobierno/Ejercito";     
-                }else if (request.getParameter("ddlEstadoPosibleCliente").equals("6")) {
-                     stDescripcion = "Empresa grande";     
+                    stDescripcion = "Ninguno";
+                } else if (request.getParameter("ddlEstadoPosibleCliente").equals("2")) {
+                    stDescripcion = "APS(Proveedor de servicios de aplicaciones";
+                } else if (request.getParameter("ddlEstadoPosibleCliente").equals("3")) {
+                    stDescripcion = "OEM de datos";
+                } else if (request.getParameter("ddlEstadoPosibleCliente").equals("4")) {
+                    stDescripcion = "ERP(Planificaicon de recursos de empresa)";
+                } else if (request.getParameter("ddlEstadoPosibleCliente").equals("5")) {
+                    stDescripcion = "Gobierno/Ejercito";
+                } else if (request.getParameter("ddlEstadoPosibleCliente").equals("6")) {
+                    stDescripcion = "Empresa grande";
                 }
                 obclsSector.setStDescripcion(stDescripcion);
                 //asignacion al  padre
                 obclsPosiblesClientes.setObclsSector(obclsSector);
             }
-            
-            
-            
-            
- //lista desplegable SECTOR           
+
+            //lista desplegable SECTOR           
             if (request.getParameter("ddlSector") != null) {
-                
+
                 //Modelo Externo 
                 obclsEstadoPosibleCliente.setInCodigo(Integer.parseInt(request.getParameter("ddlSector")));
-                 
+
                 String stDescripcion = "";
-                
+
                 if (request.getParameter("ddlSector").equals("1")) {
-                     stDescripcion = "Ninguno";
-                }else if (request.getParameter("ddlSector").equals("2")) {
-                     stDescripcion = "Intento de contacto";     
-                }else if (request.getParameter("ddlSector").equals("3")) {
-                     stDescripcion = "Contactar en el futuro";     
-                }else if (request.getParameter("ddlSector").equals("4")) {
-                     stDescripcion = "Contactado";     
-                }else if (request.getParameter("ddlSector").equals("5")) {
-                     stDescripcion = "Posible cliente no solicitado";     
-                }else if (request.getParameter("ddlSector").equals("6")) {
-                     stDescripcion = "Posible cliente perdido";     
+                    stDescripcion = "Ninguno";
+                } else if (request.getParameter("ddlSector").equals("2")) {
+                    stDescripcion = "Intento de contacto";
+                } else if (request.getParameter("ddlSector").equals("3")) {
+                    stDescripcion = "Contactar en el futuro";
+                } else if (request.getParameter("ddlSector").equals("4")) {
+                    stDescripcion = "Contactado";
+                } else if (request.getParameter("ddlSector").equals("5")) {
+                    stDescripcion = "Posible cliente no solicitado";
+                } else if (request.getParameter("ddlSector").equals("6")) {
+                    stDescripcion = "Posible cliente perdido";
                 }
                 obclsEstadoPosibleCliente.setStDescripcion(stDescripcion);
                 //asignacion al  padre
                 obclsPosiblesClientes.setObclsEstadoPosibleCliente(obclsEstadoPosibleCliente);
             }
-            
-            
-            
-            
-            
+
             if (request.getParameter("txtCantidadEmpleados") != null) {
                 obclsPosiblesClientes.setInCantidadEmpleados(Integer.parseInt(request.getParameter("txtCantidadEmpleados")));
             }
@@ -193,51 +217,41 @@ public class PosiblesClientesController extends HttpServlet {
                 obclsPosiblesClientes.setDbIngresosAnuales(Double.parseDouble(request.getParameter("txtIngresosAnuales")));
             }
 
-
-
-
-
-
 //lista desplegable CALIFICACION            
             if (request.getParameter("ddlCalificacion") != null) {
-                
+
                 //Modelo Externo 
                 obclsCalificacion.setInCodigo(Integer.parseInt(request.getParameter("ddlCalificacion")));
-                 
+
                 String stDescripcion = "";
-                
+
                 if (request.getParameter("ddlCalificacion").equals("1")) {
-                     stDescripcion = "Ninguno";
-                }else if (request.getParameter("ddlCalificacion").equals("2")) {
-                     stDescripcion = "Adquirido";     
-                }else if (request.getParameter("ddlCalificacion").equals("3")) {
-                     stDescripcion = "Activo";     
-                }else if (request.getParameter("ddlCalificacion").equals("4")) {
-                     stDescripcion = "Contactado";     
-                }else if (request.getParameter("ddlCalificacion").equals("5")) {
-                     stDescripcion = "Fallo de mercado";     
-                }else if (request.getParameter("ddlCalificacion").equals("6")) {
-                     stDescripcion = "Proyecto cancelado";     
-                }else if (request.getParameter("ddlCalificacion").equals("7")) {
-                     stDescripcion = "Apagar";     
+                    stDescripcion = "Ninguno";
+                } else if (request.getParameter("ddlCalificacion").equals("2")) {
+                    stDescripcion = "Adquirido";
+                } else if (request.getParameter("ddlCalificacion").equals("3")) {
+                    stDescripcion = "Activo";
+                } else if (request.getParameter("ddlCalificacion").equals("4")) {
+                    stDescripcion = "Contactado";
+                } else if (request.getParameter("ddlCalificacion").equals("5")) {
+                    stDescripcion = "Fallo de mercado";
+                } else if (request.getParameter("ddlCalificacion").equals("6")) {
+                    stDescripcion = "Proyecto cancelado";
+                } else if (request.getParameter("ddlCalificacion").equals("7")) {
+                    stDescripcion = "Apagar";
                 }
                 obclsCalificacion.setStDescripcion(stDescripcion);
                 //asignacion al  padre
                 obclsPosiblesClientes.setObclsCalificacion(obclsCalificacion);
             }
-            
-            
-            
-            
+
             if (request.getParameter("chkNoParticipacioCorreoElectronico") != null) {
-                
-                char chSeleccion =  request.getParameter("chkNoParticipacioCorreoElectronico").equals("ON")
+
+                char chSeleccion = request.getParameter("chkNoParticipacioCorreoElectronico").equals("ON")
                         ? 'S' : 'N';
                 obclsPosiblesClientes.setChNoParticipacionCorreoElectronico(chSeleccion);
             }
-            
-            
-            
+
             if (request.getParameter("txtIDSkype") != null) {
                 obclsPosiblesClientes.setStIDSkype(request.getParameter("txtIDSkype"));
             }
@@ -247,62 +261,44 @@ public class PosiblesClientesController extends HttpServlet {
             if (request.getParameter("txtCorreoElectronicoSecundario") != null) {
                 obclsPosiblesClientes.setStCorreoElectronicoSecundario(request.getParameter("txtCorreoElectronicoSecundario"));
             }
-            
-            
-            
+
             HttpSession session = request.getSession(true);
-            
+
             //declarar la lista de objetos donde se almacenaran los modelos
-            List<Models.clsPosiblesClientes> lstclsPosiblesClientes = 
-                    new ArrayList<Models.clsPosiblesClientes>();
-            
-            
+            List<Models.clsPosiblesClientes> lstclsPosiblesClientes
+                    = new ArrayList<Models.clsPosiblesClientes>();
+
             //validamos la existencia de la variable de session
-            if (session.getAttribute("session_lstclsPosiblesClientes") != null) {
-                lstclsPosiblesClientes = (List<Models.clsPosiblesClientes>)
-                        session.getAttribute("session_lstclsPosiblesClientes");
+            if (session.getAttribute("lstclsPosiblesClientes") != null) {
+                lstclsPosiblesClientes = (List<Models.clsPosiblesClientes>) session.getAttribute("lstclsPosiblesClientes");
             }
-            
-            
+
             //calculo automatico del codigo identificador del registro
             int inCodigo = lstclsPosiblesClientes.size() + 1;
             obclsPosiblesClientes.setInCodigo(inCodigo);
-            
-            
-            
+
             //se agrega el objeto a la lista
             lstclsPosiblesClientes.add(obclsPosiblesClientes);
-            session.setAttribute("session_lstclsPosiblesClientes", lstclsPosiblesClientes);
-            
-            
-            
-            
+            session.setAttribute("lstclsPosiblesClientes", lstclsPosiblesClientes);
+
             //Definir los parametros desde el controlador
             request.setAttribute("stMensaje", "Se realizo el proceso con exito");
             request.setAttribute("stTipo", "success");
-            
-            
+
             //Redirecciona y envio valores
             request.getRequestDispatcher("PosiblesClientes.jsp").forward(request, response);
-            
-            
-            
-            
-            
-            
+
         } catch (Exception ex) {
-            
+
             //Definir los parametros desde el controlador
             request.setAttribute("stMensaje", ex.getMessage());
             request.setAttribute("stTipo", "error");
-            
-            
+
             //Redirecciona y envio valores
             request.getRequestDispatcher("PosiblesClientes.jsp").forward(request, response);
-            
-            
-            
+
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -38,12 +38,20 @@
     <body class="bg-dark">
 
         <%
-            if (request.getAttribute("stMensaje") != null) {
+
+            if (request.getAttribute("stMensaje") != null 
+                    && request.getAttribute("stTipo") != null) {
         %>     
-        <input type="text" hidden="" id="txtMensaje" value="<%=request.getAttribute("stMensaje").toString()%>"/>
-        <input type="text" hidden="" id="txtTipo" value="<%=request.getAttribute("stTipo").toString()%>"/>
+        <input type="text" hidden="" id="txtMensaje" 
+               value="<%=request.getAttribute("stMensaje")%>"/>
+        <input type="text" hidden="" id="txtTipo" 
+               value="<%=request.getAttribute("stTipo")%>"/>
+        
         <script>
-            swal("Mensaje", document.getElementById("txtMensaje").value, document.getElementById("txtTipo").value);
+                var mensaje = document.getElementById("txtMensaje").value;
+                var tipo = document.getElementById("txtTipo").value;
+                
+                swal("Mensaje", mensaje, tipo);
         </script>
         <%
             }
@@ -55,9 +63,12 @@
             if (request.getAttribute("obclsPosiblesClientes") != null) {
                 obclsPosiblesClientes = (Models.clsPosiblesClientes) request.getAttribute("obclsPosiblesClientes");
             }
-            List<Models.clsPosiblesClientes> lstclsPosiblesClientes = new ArrayList<Models.clsPosiblesClientes>();
-            if (request.getAttribute("lstclsPosiblesClientes") != null) {
-                lstclsPosiblesClientes = (List<Models.clsPosiblesClientes>) request.getAttribute("lstclsPosiblesClientes");
+            List<Models.clsPosiblesClientes> lstclsPosiblesClientes
+                    = new ArrayList<Models.clsPosiblesClientes>();
+            
+            
+            if (session.getAttribute("lstclsPosiblesClientes") != null) {
+                lstclsPosiblesClientes = (List<Models.clsPosiblesClientes>) session.getAttribute("lstclsPosiblesClientes");
             }
         %>
 
@@ -94,25 +105,41 @@
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblEmpresa">Empresa</label>
-                                    <input type="text" placeholder="Empresa" name="txtEmpresa" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Empresa" 
+                                           name="txtEmpresa" 
+                                           class="form-control" 
+                                           value="<%= obclsPosiblesClientes.getStEmpresa() != null ? obclsPosiblesClientes.getStEmpresa() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblNombre">Nombre</label>
-                                    <input type="text" placeholder="Nombres" name="txtNombre" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Nombres" 
+                                           name="txtNombre" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStNombre() != null ? obclsPosiblesClientes.getStNombre() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblApellidos">Apellidos</label>
-                                    <input type="text" placeholder="Apellidos" name="txtApellidos" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Apellidos" 
+                                           name="txtApellidos" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStApellidos() != null ? obclsPosiblesClientes.getStApellidos() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblTitulo">Titulo</label>
-                                    <input type="text" placeholder="Titulo" name="txtTitulo" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Titulo" 
+                                           name="txtTitulo" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStTitulo() != null ? obclsPosiblesClientes.getStTitulo() : ""%>"/>
                                 </div>
                             </div>
                         </div>
@@ -123,25 +150,41 @@
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblCorreoElectronico">Correo Electronico</label>
-                                    <input type="text" placeholder="Correo Electronico" name="txtCorreoElectronico" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Correo Electronico" 
+                                           name="txtCorreoElectronico" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStCorreoElectronico() != null ? obclsPosiblesClientes.getStCorreoElectronico() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblTelefono">Telefono</label>
-                                    <input type="text" placeholder="Telefono" name="txtTelefono" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Telefono" 
+                                           name="txtTelefono" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStTelefono() != null ? obclsPosiblesClientes.getStTelefono() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblFax">Fax</label>
-                                    <input type="text" placeholder="Fax" name="txtFax" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Fax" 
+                                           name="txtFax" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStFax() != null ? obclsPosiblesClientes.getStFax() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblMovil">Movil</label>
-                                    <input type="text" placeholder="Movil" name="txtMovil" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Movil" 
+                                           name="txtMovil" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStMovil() != null ? obclsPosiblesClientes.getStMovil() : ""%>"/>
                                 </div>
                             </div>
                         </div>
@@ -152,19 +195,23 @@
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblSitioWeb">Sitio Web</label>
-                                    <input type="text" placeholder="Sitio Web" name="txtSitioWeb" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Sitio Web" 
+                                           name="txtSitioWeb" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStSitioWeb() != null ? obclsPosiblesClientes.getStSitioWeb() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblFuentePosibleCliente">Fuente de Posible Cliente</label>
                                     <select class="form-control" name="ddlFuentePosibleCliente">
-                                        <option value="1">Ninguno</option>
-                                        <option value="2">Aviso</option>
-                                        <option value="3">Llamada no solicitada</option>
-                                        <option value="4">Recomendacion de empleado</option>
-                                        <option value="5">Recomendacion externa</option>
-                                        <option value="6">Tienda en linea</option>
+                                        <option value="1" <%= obclsPosiblesClientes.obclsFuentePosibleCliente != null ? obclsPosiblesClientes.obclsFuentePosibleCliente.getInCodigo() == 1 ? "selected" : "" : "" %>>Ninguno</option>
+                                        <option value="2" <%= obclsPosiblesClientes.obclsFuentePosibleCliente != null ? obclsPosiblesClientes.obclsFuentePosibleCliente.getInCodigo() == 2 ? "selected" : "" : "" %>>Aviso</option>
+                                        <option value="3" <%= obclsPosiblesClientes.obclsFuentePosibleCliente != null ? obclsPosiblesClientes.obclsFuentePosibleCliente.getInCodigo() == 3 ? "selected" : "" : "" %>>Llamada no solicitada</option>
+                                        <option value="4" <%= obclsPosiblesClientes.obclsFuentePosibleCliente != null ? obclsPosiblesClientes.obclsFuentePosibleCliente.getInCodigo() == 4 ? "selected" : "" : "" %>>Recomendacion de empleado</option>
+                                        <option value="5" <%= obclsPosiblesClientes.obclsFuentePosibleCliente != null ? obclsPosiblesClientes.obclsFuentePosibleCliente.getInCodigo() == 5 ? "selected" : "" : "" %>>Recomendacion externa</option>
+                                        <option value="6" <%= obclsPosiblesClientes.obclsFuentePosibleCliente != null ? obclsPosiblesClientes.obclsFuentePosibleCliente.getInCodigo() == 6 ? "selected" : "" : "" %>>Tienda en linea</option>
                                     </select>
                                 </div>
 
@@ -172,12 +219,12 @@
                                 <div class="col-md-3">
                                     <label name="lblEstadoPosibleCliente">Estado de Posible Cliente</label>
                                     <select class="form-control" name="ddlEstadoPosibleCliente">
-                                        <option value="1">Ninguno</option>
-                                        <option value="2">Intento de contacto</option>
-                                        <option value="3">Contactar en el futuro</option>
-                                        <option value="4">Contactado</option>
-                                        <option value="5">Posible cliente no solicitado</option>
-                                        <option value="6">Posible cliente perdido</option>
+                                        <option value="1" <%= obclsPosiblesClientes.obclsEstadoPosibleCliente != null ? obclsPosiblesClientes.obclsEstadoPosibleCliente.getInCodigo() == 1 ? "selected" : "" : "" %>>Ninguno</option>
+                                        <option value="2" <%= obclsPosiblesClientes.obclsEstadoPosibleCliente != null ? obclsPosiblesClientes.obclsEstadoPosibleCliente.getInCodigo() == 2 ? "selected" : "" : "" %>>Intento de contacto</option>
+                                        <option value="3" <%= obclsPosiblesClientes.obclsEstadoPosibleCliente != null ? obclsPosiblesClientes.obclsEstadoPosibleCliente.getInCodigo() == 3 ? "selected" : "" : "" %>>Contactar en el futuro</option>
+                                        <option value="4" <%= obclsPosiblesClientes.obclsEstadoPosibleCliente != null ? obclsPosiblesClientes.obclsEstadoPosibleCliente.getInCodigo() == 4 ? "selected" : "" : "" %>>Contactado</option>
+                                        <option value="5" <%= obclsPosiblesClientes.obclsEstadoPosibleCliente != null ? obclsPosiblesClientes.obclsEstadoPosibleCliente.getInCodigo() == 5 ? "selected" : "" : "" %>>Posible cliente no solicitado</option>
+                                        <option value="6" <%= obclsPosiblesClientes.obclsEstadoPosibleCliente != null ? obclsPosiblesClientes.obclsEstadoPosibleCliente.getInCodigo() == 6 ? "selected" : "" : "" %>>Posible cliente perdido</option>
                                     </select>
                                 </div>
 
@@ -185,12 +232,12 @@
                                 <div class="col-md-3">
                                     <label name="lblSector">Sector</label>
                                     <select class="form-control" name="ddlSector">
-                                        <option value="1">Ninguno</option>
-                                        <option value="2">APS(Proveedor de servicios de aplicaciones</option>
-                                        <option value="3">OEM de datos</option>
-                                        <option value="4">ERP(Planificaicon de recursos de empresa)</option>
-                                        <option value="5">Gobierno/Ejercito</option>
-                                        <option value="6">Empresa grande</option>
+                                        <option value="1" <%= obclsPosiblesClientes.obclsSector != null ? obclsPosiblesClientes.obclsSector.getInCodigo() == 1 ? "selected" : "" : "" %>>Ninguno</option>
+                                        <option value="2" <%= obclsPosiblesClientes.obclsSector != null ? obclsPosiblesClientes.obclsSector.getInCodigo() == 2 ? "selected" : "" : "" %>>APS(Proveedor de servicios de aplicaciones</option>
+                                        <option value="3" <%= obclsPosiblesClientes.obclsSector != null ? obclsPosiblesClientes.obclsSector.getInCodigo() == 3 ? "selected" : "" : "" %>>OEM de datos</option>
+                                        <option value="4" <%= obclsPosiblesClientes.obclsSector != null ? obclsPosiblesClientes.obclsSector.getInCodigo() == 4 ? "selected" : "" : "" %>>ERP(Planificaicon de recursos de empresa)</option>
+                                        <option value="5" <%= obclsPosiblesClientes.obclsSector != null ? obclsPosiblesClientes.obclsSector.getInCodigo() == 5 ? "selected" : "" : "" %>>Gobierno/Ejercito</option>
+                                        <option value="6" <%= obclsPosiblesClientes.obclsSector != null ? obclsPosiblesClientes.obclsSector.getInCodigo() == 6 ? "selected" : "" : "" %>>Empresa grande</option>
                                     </select>
                                 </div>
                             </div>
@@ -203,13 +250,21 @@
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblCantidadEmpleados">Cantidad de empleados</label>
-                                    <input type="number" placeholder="Cantidad de empleados" name="txtCantidadEmpleados" class="form-control"/>
+                                    <input type="number"
+                                           placeholder="Cantidad de empleados" 
+                                           name="txtCantidadEmpleados" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getInCantidadEmpleados() != 0 ? obclsPosiblesClientes.getInCantidadEmpleados() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblIngresosAnuales">Ingresos Anuales</label>
-                                    <input type="number" placeholder="Ingresos Anuales" name="txtIngresosAnuales" class="form-control"/>
+                                    <input type="number" 
+                                           placeholder="Ingresos Anuales" 
+                                           name="txtIngresosAnuales" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getDbIngresosAnuales() != 0 ? obclsPosiblesClientes.getDbIngresosAnuales() : ""%>"/>
                                 </div>
 
 
@@ -217,13 +272,13 @@
                                 <div class="col-md-3">
                                     <label name="lblCalificacion">Calificacion</label>
                                     <select class="form-control" name="ddlCalificacion">
-                                        <option value="1">Ninguno</option>
-                                        <option value="2">Adquirido</option>
-                                        <option value="3">Activo</option>
-                                        <option value="4">Contactado</option>
-                                        <option value="5">Fallo de mercado</option>
-                                        <option value="6">Proyecto cancelado</option>
-                                        <option value="7">Apagar</option>
+                                        <option value="1" <%= obclsPosiblesClientes.obclsCalificacion != null ? obclsPosiblesClientes.obclsCalificacion.getInCodigo() == 1 ? "selected" : "" : "" %>>Ninguno</option>
+                                        <option value="2" <%= obclsPosiblesClientes.obclsCalificacion != null ? obclsPosiblesClientes.obclsCalificacion.getInCodigo() == 2 ? "selected" : "" : "" %>>Adquirido</option>
+                                        <option value="3" <%= obclsPosiblesClientes.obclsCalificacion != null ? obclsPosiblesClientes.obclsCalificacion.getInCodigo() == 3 ? "selected" : "" : "" %>>Activo</option>
+                                        <option value="4" <%= obclsPosiblesClientes.obclsCalificacion != null ? obclsPosiblesClientes.obclsCalificacion.getInCodigo() == 4 ? "selected" : "" : "" %>>Contactado</option>
+                                        <option value="5" <%= obclsPosiblesClientes.obclsCalificacion != null ? obclsPosiblesClientes.obclsCalificacion.getInCodigo() == 5 ? "selected" : "" : "" %>>Fallo de mercado</option>
+                                        <option value="6" <%= obclsPosiblesClientes.obclsCalificacion != null ? obclsPosiblesClientes.obclsCalificacion.getInCodigo() == 6 ? "selected" : "" : "" %>>Proyecto cancelado</option>
+                                        <option value="7" <%= obclsPosiblesClientes.obclsCalificacion != null ? obclsPosiblesClientes.obclsCalificacion.getInCodigo() == 7 ? "selected" : "" : "" %>>Apagar</option>
                                     </select>
                                 </div>
 
@@ -242,19 +297,31 @@
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblIDSkype">ID Skype</label>
-                                    <input type="text" placeholder="ID Skype" name="txtIDSkype" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="ID Skype" 
+                                           name="txtIDSkype" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStIDSkype() != null ? obclsPosiblesClientes.getStIDSkype() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-3">
                                     <label name="lblTwitter">Twitter</label>
-                                    <input type="text" placeholder="Twitter" name="txtTwitter" class="form-control"/>
+                                    <input type="text" 
+                                           placeholder="Twitter" 
+                                           name="txtTwitter" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStTwitter() != null ? obclsPosiblesClientes.getStTwitter() : ""%>"/>
                                 </div>
 
                                 <!-- Columna -->
                                 <div class="col-md-6">
                                     <label name="lblCorreoElectronicoSecundario">Correo Electronico Secundario</label>
-                                    <input type="email" placeholder="Correo Electronico Secundario" name="txtCorreoElectronicoSecundario" class="form-control"/>
+                                    <input type="email" 
+                                           placeholder="Correo Electronico Secundario" 
+                                           name="txtCorreoElectronicoSecundario" 
+                                           class="form-control"
+                                           value="<%= obclsPosiblesClientes.getStCorreoElectronicoSecundario()!= null ? obclsPosiblesClientes.getStCorreoElectronicoSecundario() : ""%>"/>
                                 </div>
                             </div>
                         </div>
@@ -282,69 +349,79 @@
                             <div class="form-row">
                                 <!-- columna -->
                                 <div class="col-md-12">
-                                    <table class="table table-bordered table-dark table-responsive">
+                                    <table class="table table-bordered table-dark table-striped table-responsive">
                                         <!-- fila -->
                                         <tr>
                                             <!-- columna -->
-                                            <td>Empresa</td>
-                                            <td>Nombre</td>
-                                            <td>Apellidos</td>
-                                            <td>Titulo</td>
-                                            <td>Correo Electronico</td>
-                                            <td>Telefono</td>
-                                            <td>Fax</td>
-                                            <td>Movil</td>
-                                            <td>Sitio Web</td>
-                                            <td>Fuente posible cliente</td>
-                                            <td>Estado posible cliente</td>
-                                            <td>Sector</td>
-                                            <td>Cantidad de empleados</td>
-                                            <td>Ingresos anuales</td>
-                                            <td>Calificacion</td>
-                                            <td>No participacion correo electronico</td>
-                                            <td>Id Skype</td>
-                                            <td>Twitter</td>
-                                            <td>Correo electronico secundario</td>
+                                        <thead>
+                                        <th scope="col">Codigo</th>
+                                        <th scope="col">Empresa</th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellidos</th>
+                                        <th scope="col">Titulo</th>
+                                        <th scope="col">Correo Electronico</th>
+                                        <th scope="col">Telefono</th>
+                                        <th scope="col">Fax</th>
+                                        <th scope="col">Movil</th>
+                                        <th scope="col">Sitio Web</th>
+                                        <th scope="col">Fuente posible cliente</th>
+                                        <th scope="col">Estado posible cliente</th>
+                                        <th scope="col">Sector</th>
+                                        <th scope="col">Cantidad de empleados</th>
+                                        <th scope="col">Ingresos anuales</th>
+                                        <th scope="col">Calificacion</th>
+                                        <th scope="col">No participacion correo electronico</th>
+                                        <th scope="col">Id Skype</th>
+                                        <th scope="col">Twitter</th>
+                                        <th scope="col">Correo electronico secundario</th>
+                                        </thead>
                                         </tr>
-                                         <%
-                                            for (Models.clsPosiblesClientes elem : lstclsPosiblesClientes) {
+                                        <%
+                                            for (Models.clsPosiblesClientes item : lstclsPosiblesClientes) {
                                         %>
                                         <tr>
-                                            <td><%=elem.getInCodigo()%></td>
-                                            <td><%=elem.getStEmpresa()%></td>
-                                            <td><%=elem.getStNombres()%></td>
-                                            <td><%=elem.getStApellidos()%></td>
-                                            <td><%=elem.getStTitulo()%></td>
-                                            <td><%=elem.getStCorreoElectronico()%></td>
-                                            <td><%=elem.getStTelefono()%></td>
-                                            <td><%=elem.getStFax()%></td>
-                                            <td><%=elem.getStMovil()%></td>
-                                            <td><%=elem.getStSitioWeb()%></td>
-                                            <td><%=elem.getObclsFuentePosibleCliente().getStDescripcion()%></td>
-                                            <td><%=elem.getObclsEstadoPosibleCliente().getStDescripcion()%></td>
-                                            <td><%=elem.getObclsSector().getStDescripcion()%></td>
-                                            <td><%=elem.getInCantidadEmpleados()%></td>
-                                            <td><%=elem.getDbIngresosAnuales()%></td>
-                                            <td><%=elem.getObclsCalificacion().getStDescripcion()%></td>
-                                            <td><%=elem.getChNoParticipacionCorreoElectronico()%></td>
-                                            <td><%=elem.getStIDSkype()%></td>
-                                            <td><%=elem.getStTwitter()%></td>
-                                            <td><%=elem.getStCorreoElectronicoSecundario()%></td>
-                                            
+                                            <td><%=item.getInCodigo()%></td>
+                                            <td><%=item.getStEmpresa()%></td>
+                                            <td><%=item.getStNombre()%></td>
+                                            <td><%=item.getStApellidos()%></td>
+                                            <td><%=item.getStTitulo()%></td>
+                                            <td><%=item.getStCorreoElectronico()%></td>
+                                            <td><%=item.getStTelefono()%></td>
+                                            <td><%=item.getStFax()%></td>
+                                            <td><%=item.getStMovil()%></td>
+                                            <td><%=item.getStSitioWeb()%></td>
+                                            <td><%=item.getObclsFuentePosibleCliente().getStDescripcion()%></td>
+                                            <td><%=item.getObclsEstadoPosibleCliente().getStDescripcion()%></td>
+                                            <td><%=item.getObclsSector().getStDescripcion()%></td>
+                                            <td><%=item.getInCantidadEmpleados()%></td>
+                                            <td><%=item.getDbIngresosAnuales()%></td>
+                                            <td><%=item.getObclsCalificacion().getStDescripcion()%></td>
+                                            <td><%=item.getChNoParticipacionCorreoElectronico()%></td>
+                                            <td><%=item.getStIDSkype()%></td>
+                                            <td><%=item.getStTwitter()%></td>
+                                            <td><%=item.getStCorreoElectronicoSecundario()%></td>
+
+                                            <td>
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    <a class="btn btn-success btn-sm" 
+                                                       href="PosiblesClientesController?stOpcion=M&codigoSeleccionado=<%=item.getInCodigo()%>">
+                                                        Modificar</a>
+                                                    <a class="btn btn-danger btn-sm" 
+                                                       href="PosiblesClientesController?stOpcion=E&codigoSeleccionado=<%= item.getInCodigo()%>">
+                                                        Eliminar </a>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <%
                                             }
                                         %>
-
                                     </table>
                                 </div>
                             </div>
                         </div>
-
-
                     </form>
                 </div>
             </div>
-        </div>   
+        </div>
     </body>
 </html>

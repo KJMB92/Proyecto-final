@@ -1,43 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Models;
 
-/**
- *
- * @author kevin
- */
 public class clsPosiblesClientes {
-    
-    
-    
-    //atributos o propiedades
-    public int inCodigo;
-    public String stEmpresa;
-    public String stNombres;
-    public String stApellidos;
-    public String stTitulo;
-    public String stCorreoElectronico;
-    public String stTelefono;
-    public String stFax;
-    public String stMovil;
-    public String stSitioWeb;
-    public  clsFuentePosibleCliente obclsFuentePosibleCliente;
-    public  clsEstadoPosibleCliente obclsEstadoPosibleCliente;
-    public  clsSector obclsSector;
-    public int inCantidadEmpleados;
-    public  double dbIngresosAnuales;
-    public clsCalificacion obclsCalificacion;
-    public char chNoParticipacionCorreoElectronico;
-    public String stIDSkype;
-    public String stTwitter;
-    public String stCorreoElectronicoSecundario;
-    
-    
-    
-    
     
 
     public String getStEmpresa() {
@@ -48,12 +11,12 @@ public class clsPosiblesClientes {
         this.stEmpresa = stEmpresa;
     }
 
-    public String getStNombres() {
-        return stNombres;
+    public String getStNombre() {
+        return stNombre;
     }
 
-    public void setStNombres(String stNombres) {
-        this.stNombres = stNombres;
+    public void setStNombre(String stNombre) {
+        this.stNombre = stNombre;
     }
 
     public String getStApellidos() {
@@ -161,11 +124,11 @@ public class clsPosiblesClientes {
     }
 
     public char getChNoParticipacionCorreoElectronico() {
-        return chNoParticipacionCorreoElectronico;
+        return ChNoParticipacionCorreoElectronico;
     }
 
-    public void setChNoParticipacionCorreoElectronico(char chNoParticipacionCorreoElectronico) {
-        this.chNoParticipacionCorreoElectronico = chNoParticipacionCorreoElectronico;
+    public void setChNoParticipacionCorreoElectronico(char ChNoParticipacionCorreoElectronico) {
+        this.ChNoParticipacionCorreoElectronico = ChNoParticipacionCorreoElectronico;
     }
 
     public String getStIDSkype() {
@@ -191,6 +154,8 @@ public class clsPosiblesClientes {
     public void setStCorreoElectronicoSecundario(String stCorreoElectronicoSecundario) {
         this.stCorreoElectronicoSecundario = stCorreoElectronicoSecundario;
     }
+    //ATRIBUTOS O PROPIEDADES
+    public int inCodigo;
 
     public int getInCodigo() {
         return inCodigo;
@@ -199,8 +164,23 @@ public class clsPosiblesClientes {
     public void setInCodigo(int inCodigo) {
         this.inCodigo = inCodigo;
     }
-    
-    
-    
-    
+    public String stEmpresa;
+    public String stNombre;
+    public String stApellidos;
+    public String stTitulo;
+    public String stCorreoElectronico;
+    public String stTelefono;
+    public String stFax;
+    public String stMovil;
+    public String stSitioWeb;
+    public clsFuentePosibleCliente obclsFuentePosibleCliente;
+    public clsEstadoPosibleCliente obclsEstadoPosibleCliente;
+    public clsSector obclsSector;
+    public int inCantidadEmpleados;
+    public double dbIngresosAnuales;
+    public clsCalificacion obclsCalificacion;
+    public char ChNoParticipacionCorreoElectronico;
+    public String stIDSkype;
+    public String stTwitter;
+    public String stCorreoElectronicoSecundario;
 }
